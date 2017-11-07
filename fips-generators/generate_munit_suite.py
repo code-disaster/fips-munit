@@ -70,17 +70,18 @@ def generateSource(srcPath, args):
 
 #-------------------------------------------------------------------------------
 def appendSuite(hdrPath, args):
-    if os.path.exists(hdrPath):
+    try:
         append = True
         with open(hdrPath, 'r') as yml:
             cfg = yaml.load(yml)
-            for suite in cfg['suites']:
-                if suite['name'] == args['suite']:
-                    append = False
+            if 'suites' in cfg:
+                for suite in cfg['suites']:
+                    if suite['name'] == args['suite']:
+                        append = False
         if append:
             with open(hdrPath, 'a') as f:
                 f.write('  - name: {}\n'.format(args['suite']))
-    else:
+    except:
         with open(hdrPath, 'w') as f:
             f.write('---\n')
             f.write('suites:\n')

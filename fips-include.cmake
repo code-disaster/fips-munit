@@ -1,5 +1,9 @@
+#-------------------------------------------------------------------------------
+# fips_munit_begin(name)
+#
+# Prepares to setup a new test runner.
+#
 macro(fips_munit_begin name)
-    set(CurSuites)
     set(CurSuitesRunner ${name})
 endmacro()
 
@@ -19,16 +23,15 @@ macro(fips_munit_files files)
             OUT_OF_SOURCE
             ARGS "{ suite: ${f_name} }"
         )
-        list(APPEND CurSuites ${cur_file})
     endforeach()
 endmacro()
 
+#-------------------------------------------------------------------------------
+# fips_munit_end()
+#
+# Auto-generates test runner with all suites found by fips_munit_files().
+#
 macro(fips_munit_end)
-    list(REMOVE_DUPLICATES CurSuites)
-    set(suites "")
-    foreach (cur_file ${CurSuites})
-        set(suites "${suites} ${cur_file},")
-    endforeach()
     fips_generate(
         FROM ${CMAKE_CURRENT_BINARY_DIR}/${CurSuitesRunner}.yml
         TYPE generate_munit_suite_runner
@@ -37,17 +40,17 @@ macro(fips_munit_end)
         OUT_OF_SOURCE
         ARGS "{ runner: ${CurSuitesRunner} }"
     )
-    add_custom_command(
-        TARGET ${CurTargetName}
-        POST_BUILD
-        COMMAND ${CurTargetName}
-    )
 endmacro()
 
-macro(fips_munit_run)
+#-------------------------------------------------------------------------------
+# fips_munit_run(target, [args...])
+#
+# Launch test runner as a post-build custom command.
+#
+macro(fips_munit_run target)
     add_custom_command(
-        TARGET ${CurTargetName}
+        TARGET ${target}
         POST_BUILD
-        COMMAND ${CurTargetName} ${ARGN}
+        COMMAND ${target} ${ARGN}
     )
 endmacro()
