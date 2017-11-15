@@ -11,11 +11,11 @@ To use µunit directly, just include `<munit/munit.h>`. Refer to the [µunit doc
 
 ## Code generation
 
-fips-munit defines a small set of CMake and C macros for easier integration of unit tests into your code base.
+fips-munit defines a small set of CMake and C macros, which utilize fips' code generation facilities for easier integration of unit tests into your code base.
 
 In the following example, assume that we want to run some unit tests defined in `my_code.c`, in a command line app `my_app`, with a test runner we call `my_tests`.
 
-> Note: *work in progress*! Doesn't use some of µunits advanced features yet, like parameterized tests. Also, API might still change.
+> Note: *work in progress*! Doesn't use some of µunits advanced features, like parameterized tests. Also, API might still change.
 
 ### Source code
 
