@@ -44,7 +44,11 @@ def generate(input, out_src, out_hdr, args):
 
         suites = []
         for suite in cfg['suites']:
-            suites.append(suite['name'])
+            name = suite['name']
+            if name in args['suites']:
+                suites.append(name)
+            else:
+                pass
 
         suites = set(suites)
 
