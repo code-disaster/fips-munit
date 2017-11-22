@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 1
+Version = 2
 
 import os, re, yaml
 import genutil as util
@@ -26,14 +26,14 @@ def parseSource(srcPath):
 def generateSource(srcPath, args):
     with open(srcPath, 'w') as f:
         f.write('// #version:{}#\n'.format(Version))
-        f.write('#include "munit_gen.h"\n\n')
+        f.write('#include "munit_macros.h"\n\n')
 
         for key, value in tests.items():
             f.write('MUNIT_TEST_EXTERN({});\n'.format(value['name']))
 
         f.write('\nstatic MunitTest _munit_tests[] = {\n')
 
-        for key, value in tests.items():
+        for key, value in sorted(tests.items()):
             test_name = value['name']
 
             f.write('    {\n')

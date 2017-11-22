@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 1
+Version = 2
 
 import os, re, yaml
 import genutil as util
@@ -15,7 +15,8 @@ def readConfig(input):
 def generateSource(srcPath, args, suites):
     with open(srcPath, 'w') as f:
         f.write('// #version:{}#\n'.format(Version))
-        f.write('#include "munit_gen.h"\n\n')
+        f.write('#include "munit_macros.h"\n')
+        f.write('#include <stdio.h>\n\n')
 
         for suite in suites:
             f.write('MUNIT_SUITE_EXTERN({});\n'.format(suite))
@@ -24,6 +25,9 @@ def generateSource(srcPath, args, suites):
         f.write('{\n')
 
         for suite in suites:
+            f.write('    printf("--------------------------------------------------------------------------------------------------\\n");\n')
+            f.write('    printf("-- test suite: \'{}\'\\n");\n'.format(suite))
+            f.write('    printf("--------------------------------------------------------------------------------------------------\\n");\n')
             f.write('    run_{}_suite(argc, argv);\n'.format(suite))
 
         f.write('    return 0;\n')

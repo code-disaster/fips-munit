@@ -9,7 +9,7 @@ fips_begin_lib(munit)
     add_definitions(-DMUNIT_TEST_TIME_FORMAT="0.3f")
 
     fips_files(
-        munit_gen.h
+        munit_macros.h
     )
 
     fips_dir(munit GROUP .)
