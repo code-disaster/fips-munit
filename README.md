@@ -24,7 +24,7 @@ First, implement unit tests in some of your source files.
 `my_code.c`:
 ```
 /* also includes <munit/munit.h> */
-#include <munit_gen.h>
+#include <munit_macros.h>
 
 static int some_func()
 {
@@ -93,7 +93,7 @@ This macro is just for convenience, and must be called *after* `fips_end_app()`.
 
 ### Output
 
-If used as described above, CMake will generate the following files:
+If used as described above, the following files will be generated:
 
 - `my_code_suite.c` with a µunit test suite which includes all tests found in `my_code.c`
 - `my_tests.yml` which is used internally to list all test suites, for generating the test runner
