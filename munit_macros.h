@@ -6,6 +6,8 @@
     void _munit_##Name##_fn(); \
     MunitResult _munit_##Name##_fwd(const MunitParameter params[], void* user_data) \
     { \
+        (void*)params; \
+        (void*)user_data; \
         _munit_##Name##_fn(); \
         return MUNIT_OK; \
     } \
