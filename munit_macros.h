@@ -11,9 +11,6 @@
         _munit_##Name##_fn(); \
         return MUNIT_OK; \
     } \
-    static const MunitTest _munit_##Name = { \
-        "/" # Name, _munit_##Name##_fwd, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL \
-    }; \
     void _munit_##Name##_fn()
 
 #define MUNIT_TEST_EXTERN(Name) \
