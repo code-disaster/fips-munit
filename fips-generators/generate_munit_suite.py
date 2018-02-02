@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 2
+Version = 3
 
 import os, re, yaml
 import genutil as util
@@ -12,7 +12,7 @@ def parseSource(srcPath):
     with open(srcPath, 'r') as f:
         src = f.read()
 
-        re_test = re.compile('MUNIT_TEST\((.*)\)')
+        re_test = re.compile('MUNIT_TEST\s*\((\S+)\s?(?=[,\)])')
 
         matches = re_test.finditer(src)
 
