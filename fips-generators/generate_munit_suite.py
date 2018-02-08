@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 3
+Version = 4
 
 import os, re, yaml
 import genutil as util
@@ -60,7 +60,7 @@ def generateSource(srcPath, args):
         f.write('    _munit_tests,\n')
         f.write('    NULL,\n')
         f.write('    1,\n')
-        f.write('    MUNIT_TEST_OPTION_NONE\n')
+        f.write('    MUNIT_SUITE_OPTION_NONE\n')
         f.write('};\n')
 
         f.write('\nint run_{}_suite(int argc, char* argv[])\n'.format(args['suite']))
