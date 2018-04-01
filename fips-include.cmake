@@ -23,7 +23,7 @@ macro(fips_munit_files files)
             SOURCE ${f_name}_suite.c
             HEADER ${CurSuitesRunner}.yml
             OUT_OF_SOURCE
-            ARGS "{ suite: ${f_name} }"
+            ARGS "{ suite: ${f_name}, cfg: ${CMAKE_CURRENT_BINARY_DIR}/${f_name}_suite.yml }"
         )
     endforeach()
 endmacro()

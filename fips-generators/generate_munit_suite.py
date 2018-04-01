@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 4
+Version = 5
 
 import os, re, yaml
 import genutil as util
@@ -69,27 +69,23 @@ def generateSource(srcPath, args):
         f.write('}\n')
 
 #-------------------------------------------------------------------------------
-def appendSuite(hdrPath, args):
-    try:
-        append = True
-        with open(hdrPath, 'r') as yml:
-            cfg = yaml.load(yml)
-            if 'suites' in cfg:
-                for suite in cfg['suites']:
-                    if suite['name'] == args['suite']:
-                        append = False
-        if append:
-            with open(hdrPath, 'a') as f:
-                f.write('  - name: {}\n'.format(args['suite']))
-    except:
-        with open(hdrPath, 'w') as f:
-            f.write('---\n')
-            f.write('suites:\n')
-            f.write('  - name: {}\n'.format(args['suite']))
+def generateConfig(hdrPath):
+    with open(hdrPath, 'w') as f:
+        f.write('---\n')
+        f.write('tests:\n')
+        for key, value in sorted(tests.items()):
+            f.write('  - name: {}\n'.format(value['name']))
+
+#-------------------------------------------------------------------------------
+def touch(hdrPath):
+    with open(hdrPath, 'w') as f:
+        f.write('---\n')
 
 #-------------------------------------------------------------------------------
 def generate(input, out_src, out_hdr, args):
     if util.isDirty(Version, [input], [out_src]):
         parseSource(input)
         generateSource(out_src, args)
-        appendSuite(out_hdr, args)
+        generateConfig(args['cfg'])
+        touch(out_hdr)
+

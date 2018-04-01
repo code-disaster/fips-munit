@@ -1,6 +1,6 @@
 """ generate munit test suites by scanning C code """
 
-Version = 2
+Version = 5
 
 import os, re, yaml
 import genutil as util
@@ -12,19 +12,19 @@ def readConfig(input):
         return cfg
 
 #-------------------------------------------------------------------------------
-def generateSource(srcPath, args, suites):
+def generateSource(srcPath, args):
     with open(srcPath, 'w') as f:
         f.write('// #version:{}#\n'.format(Version))
         f.write('#include "munit_macros.h"\n')
         f.write('#include <stdio.h>\n\n')
 
-        for suite in suites:
+        for suite in args['suites']:
             f.write('MUNIT_SUITE_EXTERN({});\n'.format(suite))
 
         f.write('\nint {}_main(int argc, char* argv[])\n'.format(args['runner']))
         f.write('{\n')
 
-        for suite in suites:
+        for suite in args['suites']:
             f.write('    printf("--------------------------------------------------------------------------------------------------\\n");\n')
             f.write('    printf("-- test suite: \'{}\'\\n");\n'.format(suite))
             f.write('    printf("--------------------------------------------------------------------------------------------------\\n");\n')
@@ -43,18 +43,6 @@ def generateHeader(hdrPath, args):
 
 #-------------------------------------------------------------------------------
 def generate(input, out_src, out_hdr, args):
-    if util.isDirty(Version, [input], [out_src]):
-        cfg = readConfig(input)
-
-        suites = []
-        for suite in cfg['suites']:
-            name = suite['name']
-            if name in args['suites']:
-                suites.append(name)
-            else:
-                pass
-
-        suites = set(suites)
-
-        generateSource(out_src, args, suites)
+    if util.isDirty(Version, [input], [out_src, out_hdr]):
+        generateSource(out_src, args)
         generateHeader(out_hdr, args)
