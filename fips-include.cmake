@@ -16,14 +16,14 @@ endmacro()
 macro(fips_munit_files files)
     foreach (cur_file ${ARGV})
         get_filename_component(f_name ${cur_file} NAME_WE)
-        list(APPEND CurSuites ${f_name})
+        list(APPEND CurSuites "${f_name}")
         fips_generate(
             FROM ${cur_file}
             TYPE generate_munit_suite
             SOURCE ${f_name}_suite.c
             HEADER ${CurSuitesRunner}.yml
             OUT_OF_SOURCE
-            ARGS "{ suite: ${f_name}, cfg: ${CMAKE_CURRENT_BINARY_DIR}/${f_name}_suite.yml }"
+            ARGS "{ suite: '${f_name}', cfg: '${CMAKE_CURRENT_BINARY_DIR}/${f_name}_suite.yml' }"
         )
     endforeach()
 endmacro()
@@ -41,7 +41,7 @@ macro(fips_munit_end)
         SOURCE ${CurSuitesRunner}_runner.c
         HEADER ${CurSuitesRunner}_runner.h
         OUT_OF_SOURCE
-        ARGS "{ suites: [ ${suites} ], runner: ${CurSuitesRunner} }"
+        ARGS "{ suites: [ ${suites} ], runner: '${CurSuitesRunner}' }"
     )
 endmacro()
 
