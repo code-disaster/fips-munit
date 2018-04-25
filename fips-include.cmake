@@ -34,6 +34,7 @@ endmacro()
 # Auto-generates test runner with all suites found by fips_munit_files().
 #
 macro(fips_munit_end)
+    set(CurDir)
     string(REPLACE ";" "," suites "${CurSuites}")
     fips_generate(
         FROM ${CMAKE_CURRENT_BINARY_DIR}/${CurSuitesRunner}.yml
