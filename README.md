@@ -77,7 +77,7 @@ fips_munit_run(my_app)
 
 > `fips_munit_begin(my_tests)`
 
-This defines a new test runner, `my_tests`. Must be called inside a `fips_begin_app()/fips_end_app()` block, and must be followed by `fips_munit_end()`.
+This defines a new test runner, `my_tests`. Must be called inside a `fips_begin_*()/fips_end_*()` block, and must be followed by `fips_munit_end()`.
 
 > `fips_munit_files([files]...)`
 
@@ -95,9 +95,10 @@ This macro is just for convenience, and must be called *after* `fips_end_app()`.
 
 If used as described above, the following files will be generated:
 
-- `my_code_suite.c` with a µunit test suite which includes all tests found in `my_code.c`
-- `my_tests.yml` which is used internally to list all test suites, for generating the test runner
-- `my_tests_runner.c` and `my_tests_runner.h` with entry code to run all suites, one after another.
+- `my_code_suite.c` with the auto-generated µunit test suite with all tests found in `my_code.c`
+- `my_code_suite.yml` which is used internally as input to generate the test runner
+- `my_tests_runner.c` and `my_tests_runner.h` with entry code to run all suites, one after another
+- `my_tests.yml` which is currently empty, but touched by each generated suite to trigger a recompile of the test runner
 
 The post-build step output will look like this:
 
