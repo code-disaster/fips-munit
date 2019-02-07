@@ -1,6 +1,14 @@
 #pragma once
 
+#ifdef _MSC_VER
+# pragma warning(push, 3)
+#endif
+
 #include "munit/munit.h"
+
+#ifdef _MSC_VER
+# pragma warning(pop)
+#endif
 
 #define MUNIT_TEST(Name) \
     void _munit_##Name##_fn(); \

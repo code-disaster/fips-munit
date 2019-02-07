@@ -19,7 +19,7 @@ fips_begin_lib(munit)
     )
 
     if (FIPS_CLANG OR FIPS_GCC)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers -Wno-unused-function")
     endif()
 
 fips_end_lib()
